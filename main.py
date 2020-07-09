@@ -31,21 +31,21 @@ testLoader = DataLoader(test_set, batch_size=1, shuffle=False, num_workers=1, dr
 
 if args.traincnn:
     CNNmodel = models.CNN()
-    opt = optim.Adam(params=model.parameters(), lr=1e-3)
+    opt = optim.Adam(params=CNNmodel.parameters(), lr=1e-3)
     lrscheduler = optim.lr_scheduler.ExponentialLR(optimizer=opt, gamma=0.96)
     loss_fn = nn.MSELoss()
     engine.trainCNN(CNNmodel, opt, loss_fn, trainLoader)
 
 if args.trainmlp:
     MLPmodel = models.MLP(10)
-    opt = optim.Adam(params=model.parameters(), lr=1e-3)
+    opt = optim.Adam(params=MLPmodel.parameters(), lr=1e-3)
     lrscheduler = optim.lr_scheduler.ExponentialLR(optimizer=opt, gamma=0.96)
     loss_fn = nn.MSELoss()
     engine.trainMLP(MLPmodel, opt, loss_fn, trainLoader)
 
 if args.trainmlpcnn:
-    model = models.Frankenstein(10)
-    opt = optim.Adam(params=model.parameters(), lr=1e-3)
+    CNNMLPmodel = models.realFrankenstein(10)
+    opt = optim.Adam(params=CNNMLPmodel.parameters(), lr=1e-3)
     lrscheduler = optim.lr_scheduler.ExponentialLR(optimizer=opt, gamma=0.96)
     loss_fn = nn.MSELoss()
     engine.trainCNNMLP(CNNMLPmodel, opt, loss_fn, trainLoader)

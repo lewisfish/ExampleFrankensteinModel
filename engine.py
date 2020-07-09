@@ -1,6 +1,7 @@
 import torch
 from torch.utils.data import TensorDataset, DataLoader
 from torch.utils.tensorboard import SummaryWriter
+import tqdm
 
 
 def metric(preds, gts):
@@ -20,7 +21,7 @@ def evaluate(cnnmodel, mlpmodel, cnnmlpmodel, testLoader):
     outputs = []
     gts = []
     with torch.no_grad():
-        for i, item in enumerate(testLoader, 0):
+        for i, item in enumerate(tqdm.tqdm(testLoader)):
             images = item[0]
 
             datas = item[1]
@@ -38,7 +39,7 @@ def evaluate(cnnmodel, mlpmodel, cnnmlpmodel, testLoader):
     outputs = []
     gts = []
     with torch.no_grad():
-        for i, item in enumerate(testLoader, 0):
+        for i, item in enumerate(tqdm.tqdm(testLoader)):
             images = item[0]
 
             targets = item[2]
@@ -55,7 +56,7 @@ def evaluate(cnnmodel, mlpmodel, cnnmlpmodel, testLoader):
     outputs = []
     gts = []
     with torch.no_grad():
-        for i, item in enumerate(testLoader, 0):
+        for i, item in enumerate(tqdm.tqdm(testLoader)):
 
             datas = item[1]
             targets = item[2]
@@ -75,7 +76,7 @@ def trainMLP(model, optimiser, loss_fn, trainLoader, Numepochs=200):
     writer = SummaryWriter('runs/mlp')
 
     running_loss = 0.0
-    for epoch in range(0, Numepochs):
+    for epoch in tqdm.tqdm(range(0, Numepochs)):
         for i, item in enumerate(trainLoader, 0):
 
             datas = item[1]
@@ -104,7 +105,7 @@ def trainCNN(model, optimiser, loss_fn, trainLoader, Numepochs=200):
     writer = SummaryWriter('runs/cnn')
 
     running_loss = 0.0
-    for epoch in range(0, Numepochs):
+    for epoch in tqdm.tqdm(range(0, Numepochs)):
         for i, item in enumerate(trainLoader, 0):
 
             images = item[0]
@@ -133,7 +134,7 @@ def trainCNNMLP(model, optimiser, loss_fn, trainLoader, Numepochs=200):
     writer = SummaryWriter('runs/cnnmlp')
 
     running_loss = 0.0
-    for epoch in range(0, Numepochs):
+    for epoch in tqdm.tqdm(range(0, Numepochs)):
         for i, item in enumerate(trainLoader, 0):
 
             images = item[0]
