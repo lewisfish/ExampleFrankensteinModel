@@ -44,7 +44,7 @@ if args.trainmlp:
     engine.trainMLP(MLPmodel, opt, loss_fn, trainLoader)
 
 if args.trainmlpcnn:
-    CNNMLPmodel = models.realFrankenstein(10)
+    CNNMLPmodel = models.Frankenstein(10)
     opt = optim.Adam(params=CNNMLPmodel.parameters(), lr=1e-3)
     lrscheduler = optim.lr_scheduler.ExponentialLR(optimizer=opt, gamma=0.96)
     loss_fn = nn.MSELoss()
